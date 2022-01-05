@@ -3,7 +3,9 @@ import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 
-const UserTable = ({ users }) => {
+const UserTable = ({users}) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  let [currentUsers, setCurrentUsers] = useState(users);
   const navigate = useNavigate();
   const handleNavigate = (userId) => {
     navigate(`/users/${userId}`);
@@ -13,12 +15,20 @@ const UserTable = ({ users }) => {
     setKeyword(e.target.value);
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 25;
   const lastIndex = currentPage * usersPerPage;
   const startIndex = lastIndex - usersPerPage;
-  const currentUsers = users.slice(startIndex, lastIndex);
+  currentUsers = currentUsers.slice(startIndex, lastIndex);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const handleSearch = () => {
+    console.log("jo")
+    setCurrentUsers(currentUsers.filter((u) =>
+        keyword === ""
+          ? u
+          : u.first_name.toLowerCase().includes(keyword.toLowerCase())
+      )
+    );
+  };
   return (
     <>
       <h1>Users</h1>
@@ -34,6 +44,7 @@ const UserTable = ({ users }) => {
             <Button
               style={{ borderRadius: 0, backgroundColor: "white" }}
               variant="light"
+              onClick={handleSearch}
             >
               <i class="fas fa-search"></i>
             </Button>
@@ -72,7 +83,7 @@ const UserTable = ({ users }) => {
             usersperpage={usersPerPage}
             totalusers={users.length}
             paginate={paginate}
-            currentPage = {currentPage}
+            currentPage={currentPage}
           />
         </Col>
       </Row>
