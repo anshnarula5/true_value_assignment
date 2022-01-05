@@ -1,5 +1,8 @@
 import {useEffect, useState} from "react";
-import {Button, Container, Row} from "react-bootstrap";
+import {Container} from "react-bootstrap";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import UserInfo from "./components/UserInfo";
+import UserTable from "./components/UserTable";
 
 function App() {
   const [data, setData] = useState([])
@@ -9,9 +12,13 @@ function App() {
     .then(d => setData(d))
   }, [])
   return (
-    <Container className="container">
-      HI
-      <Button className="btn btn-primary">HI</Button>
+    <Container className="container py-3">
+      <BrowserRouter>
+        <Routes>
+          <Route path = "/" element={<UserTable users={data} />} />
+          <Route path = "/:id" element={<UserInfo users={data} />} />
+        </Routes>
+      </BrowserRouter>
     </Container>
   );
 }
