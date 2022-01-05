@@ -8,7 +8,7 @@ const UserInfo = ({ users }) => {
   useEffect(() => {
     const user = users[id - 1];
     setUserInfo(user);
-  }, [users]);
+  }, [users, id]);
   console.log(userInfo);
   return (
     <>
