@@ -25,9 +25,6 @@ function App() {
         <Routes>
           {!loading && <Route path="/" element={<UserTable users={data} />} />}
           {!loading && (
-            <Route path="?page=page" element={<UserTable users={data} />} />
-          )}
-          {!loading && (
             <Route path="/users/:id" element={<UserInfo users={data} />} />
           )}
         </Routes>
